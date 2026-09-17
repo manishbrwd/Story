@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Resize up to 50 JPG photos to a 3 x 3.5 inch portrait size privately in your browser." />
+    <title>Bulk Photo Resizer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#top" aria-label="Bulk Photo Resizer home"><span class="brand-mark">▣</span><span>Bulk<span>Photo</span></span></a>
+        <span class="secure-badge"><span class="dot"></span>Private browser processing</span>
+      </header>
+
+      <section class="hero" id="top">
+        <p class="eyebrow">QUICK • PRIVATE • PRINT-READY</p>
+        <h1>Resize photos beautifully,<br /><em>all at once.</em></h1>
+        <p class="hero-copy">Turn up to 50 JPG photos into perfect 3 × 3.5 inch portraits in seconds. Nothing is uploaded or stored.</p>
+      </section>
+
+      <section class="workspace" aria-label="Photo resizing workspace">
+        <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Upload JPG photos">
+          <input id="fileInput" type="file" accept="image/jpeg,image/jpg" multiple hidden />
+          <div class="drop-icon">↑</div>
+          <h2>Drop your photos here</h2>
+          <p>or choose photos from your device</p>
+          <button class="button button-primary" id="selectButton" type="button">Select photos <span>→</span></button>
+          <small>JPG or JPEG · Up to 50 photos · Max 20 MB each</small>
+        </div>
+
+        <div class="settings-card">
+          <div class="settings-heading"><div><p class="eyebrow">OUTPUT SETTINGS</p><h2>Your portrait format</h2></div><span class="format-pill">3 × 3.5 in</span></div>
+          <div class="setting-grid">
+            <label class="setting"><span>Resolution</span><select id="dpi"><option value="300" selected>300 DPI (Print quality)</option><option value="200">200 DPI</option><option value="150">150 DPI</option></select></label>
+            <label class="setting"><span>Crop mode</span><select id="fitMode"><option value="cover" selected>Fill frame (crop edges)</option><option value="contain">Fit inside frame</option></select></label>
+            <fieldset class="setting bg-options"><legend>Frame background</legend><div><label><input type="radio" name="background" value="original" checked /><span class="swatch original"></span>Original</label><label><input type="radio" name="background" value="white" /><span class="swatch white"></span>White</label><label><input type="radio" name="background" value="gray" /><span class="swatch gray"></span>Light gray</label></div></fieldset>
+          </div>
+          <p class="format-note"><span>✓</span> Fixed 6:7 portrait ratio · <strong id="pixelSize">900 × 1050 px</strong> · <strong>40–100 KB JPG</strong></p>
+        </div>
+      </section>
+
+      <section id="photoSection" class="photos-section hidden">
+        <div class="section-title"><div><p class="eyebrow">YOUR PHOTOS</p><h2><span id="photoCount">0</span> photos ready</h2></div><button id="clearAll" class="text-button" type="button">Clear all</button></div>
+        <div id="statusMessage" class="status-message" role="status"></div>
+        <div class="photo-grid" id="photoGrid"></div>
+        <div class="action-bar"><p><span class="lock">⌁</span> Your photos stay on this device</p><button id="convertAll" class="button button-primary button-large" type="button">Convert all photos <span>→</span></button></div>
+      </section>
+    </main>
+
+    <div id="cropModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="cropTitle">
+      <div class="modal-panel">
+        <button id="closeModal" class="close-button" type="button" aria-label="Close crop editor">×</button>
+        <div class="modal-copy"><p class="eyebrow">MANUAL CROP</p><h2 id="cropTitle">Fine-tune your portrait</h2><p>Drag the image to reposition it. Use the slider to zoom.</p></div>
+        <div class="crop-stage" id="cropStage"><canvas id="cropCanvas" width="420" height="490"></canvas></div>
+        <label class="zoom-control"><span>Zoom</span><input id="zoomRange" type="range" min="1" max="3" value="1" step="0.01" /><span id="zoomValue">100%</span></label>
+        <div class="modal-actions"><button id="resetCrop" class="button button-secondary" type="button">Reset</button><button id="saveCrop" class="button button-primary" type="button">Save crop <span>→</span></button></div>
+      </div>
+    </div>
+    <div id="toast" class="toast" role="alert"></div>
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
+
